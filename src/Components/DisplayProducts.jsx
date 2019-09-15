@@ -11,6 +11,8 @@ import {
   Row,
   Container
 } from "reactstrap";
+import { Link } from "react-router-dom";
+import AllReviews from "./AllReviews";
 // import image from "../Assets/Spotify_Logo.png";
 
 class DisplayProducts extends Component {
@@ -26,26 +28,26 @@ class DisplayProducts extends Component {
         <Container fluid>
           <Row>
             {this.state.products.map(product => (
-              <div key={product.id}>
-                <Col sm= "3">
-                  <Card>
+                  <Card key={product.id} className = "align-items-center" id="wholeCard">
                     <CardImg 
                       fluid
                       className = "fluid"
                       top
                       src={product.imageUrl}
-                      alt="Card image cap"
+                      alt="image"
                     />
-                    <CardBody>
+                    <CardBody className = "cardBody">
                       <CardTitle>{product.name}</CardTitle>
-                      <CardSubtitle>{product.descriptio}</CardSubtitle>
-                      <CardText>{product.price}</CardText>
+                      <CardSubtitle>{product.description}</CardSubtitle>
+                      <CardText ><span>€{product.price}</span></CardText>
                     </CardBody>
-                    {/* <Button onClick={() => this.getAllComments(this.props.item.asin)}>Load Comments</Button>
-        <AllComments comments={this.state.comments} /> */}
-                  </Card>
-                </Col>
-              </div>
+                    <Link
+                     to={"products/"+ product.id + "/reviews"}
+                     className="titleLink">
+                    <Button onClick={() =><AllReviews/> }>Reviews</Button>                
+                   </Link>
+                   </Card>
+
             ))}
           </Row>
         </Container>
@@ -53,11 +55,24 @@ class DisplayProducts extends Component {
     );
   }
 
+
   componentDidMount = async () => {
+    await this.getProducts();
+
+  };
+
+  getProducts = async () => {
     var resp = await fetch("http://localhost:3000/products");
     var json = await resp.json();
     this.setState({ products: json });
-  };
+
+}
+
+
+
 }
 
 export default DisplayProducts;
+
+
+    //this.getAllComments(this.props.item.asin)//

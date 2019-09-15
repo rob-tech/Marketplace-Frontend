@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import './StyleSheets/DisplayProducts.css';
 import './index.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Main from './Components/Main';
